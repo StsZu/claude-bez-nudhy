@@ -13,6 +13,6 @@
 | R7 | Claude Security — доступ | Урок 7: «(beta)» | Public beta з кінця квітня 2026; Enterprise, «скоро» Team і Max | [anthropic.com/product/security](https://www.anthropic.com/product/security) | Уточнити плани |
 | R8 | Enterprise — умови | Урок 7: «від 20 місць» | Pricing: від 20 місць, річна оплата + використання за тарифами API | [claude.com/pricing](https://claude.com/pricing) | Перевірити перед запуском |
 | R9 | Схема «5 груп продуктів» з уроку 1 | Урок 1: схема дверей — реконструкція | Оригінальна картинка в документі курсу порожня | `course/course.md`, рядок з `embedded content` | Якщо оригінал знайдеться — звірити групи |
-| R10 | Ліміти Umami Cloud Hobby (≈100K подій/міс) | Лише `plan.md` (не в курсі) | Огляди розходяться; офіційна сторінка лімітів не показала | [umami.is/docs/cloud/faq](https://umami.is/docs/cloud/faq) | Перевірити перед створенням акаунта (рішення D3) |
+| R10 | ~~Ліміти Umami Cloud Hobby~~ — **закрито 2026-11-06** | Лише `plan.md` (не в курсі) | Підтверджено на сторінці вибору плану cloud.umami.is (скриншот власника): Hobby $0 — 100K подій/міс, 1 сайт, зберігання 6 міс, підтримка спільноти, **без командних учасників**; Pro $20 — 1M подій, 20 сайтів, до 10 учасників, 2 роки | cloud.umami.is (реєстрація) | Обрано Hobby |
 
 Виправлено в курсі за аудитом (не потребує перевірки): Team «від 5 людей» → «від 2 людей»; позначки beta для Linux, Google Workspace, Claude Security; «Claude Tag — Team і Enterprise»; задачі за розкладом — платні плани. Деталі: `specs/001-interactive-course/course-audit.md`.
