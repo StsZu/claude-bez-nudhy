@@ -1,0 +1,16 @@
+T027 Живий збір аналітики — 2026-11-06
+Umami Cloud Hobby, вхід через GitHub StsZu. Website ID — змінна репозиторію PUBLIC_UMAMI_WEBSITE_ID (не секрет).
+Workflow передає її в збірку; живий HTML містить:
+<script defer src="https://cloud.umami.is/script.js" data-website-id="51ff548f-…" data-do-not-track="true">
+Локальна збірка без змінної — 0 згадок umami (e2e «без налаштування аналітики немає скрипта» лишається чинним).
+
+Живий сайт, Chrome 360 px, урок 1 + 2 натискання «Далі» → POST https://gateway.umami.is/api/send:
+200 pageview /claude-bez-nudhy/lesson/1/
+200 lesson_start {"lesson":1}
+200 card_view {"lesson":1,"card":0,"kind":"hook"}
+200 card_view {"lesson":1,"card":1,"kind":"idea"}
+200 card_view {"lesson":1,"card":2,"kind":"idea"}
+(це тестовий візит — 1 відвідувач у статистиці 2026-11-06)
+
+Lighthouse мобільний на живому сайті зі скриптом Umami: / Perf 100 A11y 100; /lesson/1/ Perf 100 A11y 100.
+Не перевірено: події в дашборді Umami (бачить лише власник); воронка lesson_start(1) → lesson_complete(8) — налаштувати в Umami (Funnels).
