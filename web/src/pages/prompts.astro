@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadLessons } from '../lib/content';
+import { u } from '../lib/url';
+const lessons = loadLessons();
+---
+<Base title="Бібліотека промптів">
+  <h1>Бібліотека промптів</h1>
+  <p class="muted">Скопіюй, встав у Claude, заміни текст у квадратних дужках.</p>
+  <div class="chips" role="group" aria-label="Фільтр за місією">
+    <button type="button" class="ghost" data-filter="" aria-pressed="true">Усі</button>
+    {lessons.map((l) => <button type="button" class="ghost" data-filter={l.id} aria-pressed="false">{l.id}. {l.mission}</button>)}
+  </div>
+  {
+    lessons.map((l) => (
+      <section class="card" data-group={l.id}>
+        <h2>{l.id}. {l.title}</h2>
+        <p class="muted">Дія місії «{l.mission}»</p>
+        <pre class="prompt" id={`p-${l.id}-a`}>{l.action.prompt}</pre>
+        <button type="button" class="secondary" data-copy-target={`p-${l.id}-a`} data-label="Скопіювати">Скопіювати</button>
+        {(l.examples ?? []).length > 0 && <h3 style="margin-top:1rem">Живі приклади</h3>}
+        {(l.examples ?? []).map((e, i) => (
+          <div>
+            <pre class="prompt" id={`p-${l.id}-${i}`}>{e}</pre>
+            <button type="button" class="secondary" data-copy-target={`p-${l.id}-${i}`} data-label="Скопіювати">Скопіювати</button>
+          </div>
+        ))}
+        <p><a href={u(`lesson/${l.id}/`)}>До місії {l.id}</a></p>
+      </section>
+    ))
+  }
+  <script>
+    import { initCopyButtons } from '../scripts/copy';
+    initCopyButtons();
+    const btns = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        const f = b.dataset.filter;
+        btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        document.querySelectorAll<HTMLElement>('[data-group]').forEach((g) => (g.hidden = !!f && g.dataset.group !== f));
+      }),
+    );
+  </script>
+</Base>

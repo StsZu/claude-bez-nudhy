@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import { BADGES } from '../lib/game';
+---
+<Base title="Мій прогрес">
+  <h1>Мій прогрес</h1>
+  <section class="card">
+    <h2 id="lvl-name">Рівень 1 · Новачок</h2>
+    <div class="bar" aria-hidden="true"><span id="lvl-bar"></span></div>
+    <p id="lvl-text">0 XP</p>
+    <p id="p-lessons"></p>
+    <p id="p-chaos"></p>
+  </section>
+  <section class="card">
+    <h2>Серія днів</h2>
+    <p id="p-streak">Ще не почалась — і це нормально.</p>
+    <p class="hint">
+      Заморозка рятує серію, якщо пропустив день. Даються за кожні 3 активні дні (до 2 у запасі). Пропуск ніколи не
+      забирає XP, бейджі чи завершені місії.
+    </p>
+  </section>
+  <section class="card">
+    <h2>Бейджі</h2>
+    <ul class="badges" id="badges">
+      {
+        Object.entries(BADGES).map(([id, b]) => (
+          <li data-badge={id} class="locked">
+            <strong>{b.name}</strong>
+            <span class="muted">{b.hint}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <section class="card page-only">
+    <h2>Почати курс заново</h2>
+    <p class="muted">Скидає прогрес лише на цьому пристрої.</p>
+    <button type="button" class="secondary" id="reset">Скинути прогрес…</button>
+    <div id="reset-confirm" role="group" aria-labelledby="reset-q" hidden>
+      <p id="reset-q"><strong>Точно скинути XP, бейджі й місії на цьому пристрої?</strong></p>
+      <div class="row">
+        <button type="button" class="primary" id="reset-yes">Так, скинути</button>
+        <button type="button" class="secondary" id="reset-no">Скасувати</button>
+      </div>
+    </div>
+  </section>
+  <script>
+    import { chaosLeft, levelFor } from '../lib/game';
+    import { chaosByLesson, resetAll, subscribe, toast } from '../scripts/store';
+    const $ = (id: string) => document.getElementById(id)!;
+    subscribe((s) => {
+      const lv = levelFor(s.xp);
+      $('lvl-name').textContent = `Рівень ${lv.level} · ${lv.name}`;
+      const span = lv.next ? lv.next.min - lv.min : 1;
+      ($('lvl-bar') as HTMLElement).style.width = lv.next ? `${Math.round(((s.xp - lv.min) / span) * 100)}%` : '100%';
+      $('lvl-text').textContent = lv.next ? `${s.xp} XP · до рівня «${lv.next.name}» ще ${lv.toNext} XP` : `${s.xp} XP · максимальний рівень`;
+      $('p-lessons').textContent = `Місій завершено: ${s.done.length} з 8 · дій виконано: ${s.actions.length} · днів челенджу: ${s.challenge.length} з 7`;
+      const left = chaosLeft(s, chaosByLesson);
+      $('p-chaos').textContent = left === 0 ? 'Скринька: 0 листів. Хаос переможено.' : `У скриньці: ${left} з 214 листів.`;
+      $('p-streak').textContent = s.streak.count
+        ? `Зараз: ${s.streak.count} дн. · найкраща: ${s.streak.best} дн. · заморозок у запасі: ${s.streak.freezes}`
+        : 'Ще не почалась — і це нормально.';
+      document.querySelectorAll<HTMLElement>('[data-badge]').forEach((li) => {
+        const got = s.badges.includes(li.dataset.badge!);
+        li.classList.toggle('locked', !got);
+        li.setAttribute('aria-label', `${li.querySelector('strong')!.textContent}: ${got ? 'отримано' : 'ще попереду'}`);
+      });
+    });
+    const confirmBox = $('reset-confirm');
+    $('reset').addEventListener('click', () => {
+      confirmBox.hidden = false;
+      ($('reset-no') as HTMLButtonElement).focus();
+    });
+    $('reset-no').addEventListener('click', () => (confirmBox.hidden = true));
+    $('reset-yes').addEventListener('click', () => {
+      resetAll();
+      confirmBox.hidden = true;
+      toast('Прогрес скинуто. Нова сторінка — новий старт.');
+    });
+  </script>
+</Base>

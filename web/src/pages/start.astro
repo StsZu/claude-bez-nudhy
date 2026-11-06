@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+import { ROLES } from '../lib/game';
+const desc: Record<string, string> = {
+  office: 'Пошта, таблиці, документи. Без коду.',
+  manager: 'Команда, звіти, зустрічі, автоматизація рутини.',
+  dev: 'Код, термінал, API, автоматизація в репозиторії.',
+};
+---
+<Base title="Обери маршрут">
+  <h1>Хто ти сьогодні?</h1>
+  <p>Маршрут лише змінює порядок місій і підказує, з чого почати. Усі місії відкриті завжди, роль можна змінити на карті.</p>
+  <div class="options" style="display:grid">
+    {
+      Object.entries(ROLES).map(([key, r]) => (
+        <button type="button" class="opt" data-role={key}>
+          <span><strong>{r.name}</strong><br /><span class="muted">{desc[key]}</span></span>
+        </button>
+      ))
+    }
+  </div>
+  <p><a href={u('lesson/1/')} id="skip">Пропустити й почати з місії 1</a></p>
+  <script>
+    import { nextLesson, type Role } from '../lib/game';
+    import { getState, meta, setRole } from '../scripts/store';
+    document.querySelectorAll<HTMLButtonElement>('[data-role]').forEach((b) =>
+      b.addEventListener('click', () => {
+        setRole(b.dataset.role as Role);
+        const n = nextLesson(getState()) ?? 1;
+        location.href = meta.lessons[n].url;
+      }),
+    );
+  </script>
+</Base>

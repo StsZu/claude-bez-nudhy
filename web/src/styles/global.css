@@ -45,8 +45,11 @@ body {
   background: var(--bg);
   color: var(--text);
   font: 400 1.125rem/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, sans-serif;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
+figure { margin: 0; }
+img { max-width: 100%; height: auto; }
 h1, h2, h3 { line-height: 1.25; margin: 0 0 0.6em; }
 h1 { font-size: 1.75rem; }
 h2 { font-size: 1.35rem; }
@@ -71,9 +74,10 @@ main { padding-top: 1rem; padding-bottom: 3rem; min-height: 70vh; }
   max-width: 42rem; margin: 0 auto; padding: 0.75rem 1rem;
   display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem;
 }
-.brand { font-weight: 800; color: var(--text); text-decoration: none; margin-right: auto; font-size: 1.05rem; }
+.brand { font-weight: 800; color: var(--text); text-decoration: none; margin-right: auto; font-size: 1rem; line-height: 1.2; }
 .brand span { color: var(--accent); }
-.stats { display: flex; gap: 0.5rem; flex-wrap: wrap; order: 3; width: 100%; }
+.stats { display: flex; gap: 0.4rem; flex-wrap: wrap; order: 3; width: 100%; }
+.top .ghost { min-height: 44px; padding: 0.3rem 0.7rem; font-size: 0.95rem; }
 .stat {
   font-size: 0.9rem; padding: 0.25rem 0.7rem; border-radius: 999px;
   background: var(--surface-2); color: var(--text); text-decoration: none; white-space: nowrap;
@@ -164,7 +168,8 @@ button[aria-pressed='true'].ghost { background: var(--accent-soft); border-color
 .layer p { margin: 0; font-size: 0.95rem; }
 .layer.connectors { background: var(--warn-soft); }
 .layer.models { background: var(--accent-soft); }
-.doors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.doors-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+@media (min-width: 480px) { .doors-grid { grid-template-columns: 1fr 1fr; } }
 .doors-grid .layer { background: var(--surface-2); }
 
 .doors-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }

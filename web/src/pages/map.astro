@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadLessons } from '../lib/content';
+import { u } from '../lib/url';
+import { ROLES } from '../lib/game';
+const lessons = loadLessons();
+---
+<Base title="Карта місій">
+  <h1>Карта місій</h1>
+  <p id="map-next" class="tldr" hidden></p>
+  <p class="muted">Відкривай будь-яку місію в будь-якому порядку.</p>
+  <div class="chips" role="group" aria-label="Маршрут за роллю">
+    {Object.entries(ROLES).map(([k, r]) => <button type="button" class="ghost" data-role={k} aria-pressed="false">{r.name}</button>)}
+    <button type="button" class="ghost" data-role="" aria-pressed="false">Без ролі</button>
+  </div>
+  <ol class="missions" id="missions">
+    {
+      lessons.map((l) => (
+        <li data-lesson={l.id}>
+          <a class="mission" href={u(`lesson/${l.id}/`)}>
+            <span class="muted">Місія {l.id} · ~{l.minutes} хв</span>
+            <span class="title">{l.mission}</span>
+            <span>{l.title}</span>
+            <span class="tags">
+              <span class="tag" data-status>Нова</span>
+              <span class="tag rec" data-rec hidden>Рекомендовано</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <script>
+    import { lessonOrder, nextLesson, ROLES, type Role } from '../lib/game';
+    import { meta, setRole, subscribe } from '../scripts/store';
+    const list = document.getElementById('missions')!;
+    const items = new Map([...list.querySelectorAll<HTMLLIElement>('li')].map((li) => [Number(li.dataset.lesson), li]));
+    const nextP = document.getElementById('map-next')!;
+    subscribe((s) => {
+      const rec = s.role ? ROLES[s.role].recommended : [];
+      lessonOrder(s.role).forEach((id) => {
+        const li = items.get(id)!;
+        list.appendChild(li);
+        const status = li.querySelector<HTMLElement>('[data-status]')!;
+        const done = s.done.includes(id);
+        status.textContent = done ? 'Завершено' : s.started.includes(id) ? 'Почато' : 'Нова';
+        status.classList.toggle('done', done);
+        li.querySelector<HTMLElement>('[data-rec]')!.hidden = !rec.includes(id);
+      });
+      document.querySelectorAll<HTMLButtonElement>('[data-role]').forEach((b) =>
+        b.setAttribute('aria-pressed', String((b.dataset.role || null) === s.role)),
+      );
+      const n = nextLesson(s);
+      nextP.hidden = false;
+      nextP.innerHTML = '';
+      if (n) {
+        nextP.append('Наступна за маршрутом: ');
+        const a = document.createElement('a');
+        a.href = meta.lessons[n].url;
+        a.textContent = `місія «${meta.lessons[n].mission}»`;
+        nextP.append(a);
+      } else nextP.textContent = 'Усі 8 місій завершено. Скринька порожня!';
+    });
+    document.querySelectorAll<HTMLButtonElement>('[data-role]').forEach((b) =>
+      b.addEventListener('click', () => setRole((b.dataset.role || null) as Role | null)),
+    );
+  </script>
+</Base>

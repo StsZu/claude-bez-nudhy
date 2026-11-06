@@ -2,12 +2,12 @@
 // Помилки пишуться людською мовою: файл, поле, що не так.
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { Marked } from 'marked';
 import YAML from 'yaml';
 import { z } from 'zod';
 
-const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../content');
+// Команди запускаються з теки web/, контент лежить поруч: ../content.
+const CONTENT_DIR = process.env.CONTENT_DIR || path.resolve(process.cwd(), '..', 'content');
 
 const text = (name: string) => z.string({ error: `потрібен текст (${name})` }).trim().min(1, `«${name}» не може бути порожнім`);
 

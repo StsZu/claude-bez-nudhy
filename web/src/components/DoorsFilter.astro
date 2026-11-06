@@ -1,0 +1,37 @@
+---
+import type { DoorT } from '../lib/content';
+import { u } from '../lib/url';
+
+interface Props {
+  doors: DoorT[];
+  id?: string;
+}
+const { doors, id = 'doors' } = Astro.props;
+const chips = ['таблиця', 'пошта', 'код', 'щотижня', 'сайт', 'файл'];
+---
+<div class="doors-filter" data-doors-filter>
+  <label for={`${id}-q`}>Що хочеш зробити?</label>
+  <input id={`${id}-q`} type="search" placeholder="Напр.: таблиця, пошта" autocomplete="off" data-q />
+  <div class="chips" role="group" aria-label="Швидкий вибір">
+    {chips.map((c) => <button type="button" class="ghost" data-chip={c} aria-pressed="false">{c}</button>)}
+  </div>
+  <p class="hint" aria-live="polite" data-count>Усього варіантів: {doors.length}</p>
+  <ul class="doors-list">
+    {
+      doors.map((d) => (
+        <li data-search={[d.want, d.door, ...(d.tags ?? [])].join(' ').toLowerCase()}>
+          <span class="muted">Хочу: {d.want}</span>
+          <br />
+          <span class="door">→ {d.door}</span> · <a href={u(`lesson/${d.lesson}/`)}>урок {d.lesson}</a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="hint" data-empty hidden>
+    Не знайшлося. Спробуй інше слово або почни з найпростіших дверей — <a href={u('lesson/2/')}>чату</a>.
+  </p>
+</div>
+<script>
+  import { initDoorsFilters } from '../scripts/doors';
+  initDoorsFilters();
+</script>

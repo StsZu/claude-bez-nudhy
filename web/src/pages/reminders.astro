@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadChallenge, loadLessons } from '../lib/content';
+import { u } from '../lib/url';
+const lessons = Object.fromEntries(loadLessons().map((l) => [l.id, l.mission]));
+const days = loadChallenge().map((d) => ({ ...d, mission: lessons[d.lesson], path: u(`lesson/${d.lesson}/`) }));
+const bot = import.meta.env.PUBLIC_TELEGRAM_BOT;
+---
+<Base title="Нагадування">
+  <h1>Нагадування раз на день</h1>
+  <p>Зовнішній тригер працює краще за силу волі. Обери час — отримаєш 7 подій у свій календар, по одній на день, з посиланням на 5-хвилинну дію.</p>
+  <section class="card">
+    <h2>Календар</h2>
+    <form id="ics-form">
+      <label for="time">О котрій нагадувати?</label>
+      <input id="time" name="time" type="time" value="09:00" required />
+      <label for="start" style="margin-top:0.8rem">З якого дня?</label>
+      <input id="start" name="start" type="date" required />
+      <div class="row">
+        <button type="submit" class="primary big">Завантажити календар (.ics)</button>
+      </div>
+    </form>
+    <p class="hint" id="ics-status" aria-live="polite"></p>
+    <details>
+      <summary>Як додати й як вимкнути</summary>
+      <ul>
+        <li><strong>Google Calendar:</strong> Налаштування → Імпорт і експорт → Імпорт → обери файл.</li>
+        <li><strong>Apple Calendar, Outlook:</strong> відкрий завантажений файл — календар запропонує додати події.</li>
+        <li><strong>Вимкнути:</strong> просто видали події «Claude без нудьги». Ми нічого не надсилаємо й не знаємо твоєї пошти.</li>
+      </ul>
+    </details>
+  </section>
+  <section class="card">
+    <h2>Telegram</h2>
+    {
+      bot ? (
+        <p>Бот щодня надсилає одну місію й міні-квіз. <a href={`https://t.me/${bot}`} rel="noopener">Відкрити бота</a>. Вимкнути — команда /stop, видалити дані — /forget.</p>
+      ) : (
+        <p class="muted">Telegram-бот з'явиться пізніше. Поки що — календар.</p>
+      )
+    }
+  </section>
+  <script type="application/json" id="days-data" set:html={JSON.stringify(days)} />
+  <script>
+    import { buildIcs } from '../lib/ics';
+    import { track } from '../lib/analytics';
+    type Day = { day: number; text: string; mission: string; path: string };
+    const days: Day[] = JSON.parse(document.getElementById('days-data')!.textContent!);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const t = new Date();
+    t.setDate(t.getDate() + 1);
+    const start = document.getElementById('start') as HTMLInputElement;
+    start.value = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+    document.getElementById('ics-form')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const time = (document.getElementById('time') as HTMLInputElement).value;
+      const status = document.getElementById('ics-status')!;
+      try {
+        const ics = buildIcs({
+          startDate: start.value,
+          time,
+          days: days.map((d) => ({ day: d.day, text: `${d.text} (місія «${d.mission}»)`, url: new URL(d.path, location.origin).href })),
+        });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+        a.download = 'claude-bez-nudhy.ics';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        status.textContent = `Готово: 7 подій о ${time}, з ${start.value}. Відкрий файл, щоб додати в календар.`;
+        track('reminder_set', { channel: 'ics' });
+      } catch {
+        status.textContent = 'Перевір час і дату — щось не так із форматом.';
+      }
+    });
+  </script>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadChallenge } from '../lib/content';
+import { u } from '../lib/url';
+const days = loadChallenge();
+---
+<Base title="Челендж 7 днів">
+  <h1>Челендж: 7 днів по 5 хвилин</h1>
+  <p>Один день — одна дія. Будь-який порядок. Пропустив день — просто продовжуй з наступного, жодних штрафів.</p>
+  <p class="muted">Кожен день — +20 XP. Після всіх семи — бейдж «Тиждень практики» і твоя маленька система: щонайменше одна автоматизація і три нові звички.</p>
+  <ol class="missions">
+    {
+      days.map((d) => (
+        <li id={`day-${d.day}`}>
+          <div class="card">
+            <h2>День {d.day}</h2>
+            <p>{d.text} <a href={u(`lesson/${d.lesson}/`)}>Урок {d.lesson}</a></p>
+            <button type="button" class="secondary" data-day={d.day} aria-pressed="false">Зроблено</button>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+  <p><a href={u('reminders/')}>Нагадувати мені щодня</a></p>
+  <script>
+    import { track } from '../lib/analytics';
+    import { dispatch, getState, subscribe } from '../scripts/store';
+    const btns = [...document.querySelectorAll<HTMLButtonElement>('[data-day]')];
+    subscribe((s) =>
+      btns.forEach((b) => {
+        const done = s.challenge.includes(Number(b.dataset.day));
+        b.setAttribute('aria-pressed', String(done));
+        b.textContent = done ? 'Зроблено — молодець' : 'Зроблено';
+      }),
+    );
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        const day = Number(b.dataset.day);
+        if (getState().challenge.includes(day)) return;
+        dispatch({ type: 'challenge', day });
+        track('challenge_day', { day });
+      }),
+    );
+  </script>
+</Base>

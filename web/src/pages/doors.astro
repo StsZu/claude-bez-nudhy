@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import DoorsFilter from '../components/DoorsFilter.astro';
+import { loadDoors } from '../lib/content';
+---
+<Base title="Які двері відчинити" description="Шпаргалка: яку частину Claude обрати під задачу.">
+  <h1>Які двері відчинити</h1>
+  <p class="tldr">
+    <strong>Правило одного речення:</strong> починай там, де вже лежать твої дані, а складніші двері відчиняй лише тоді, коли
+    прості не справляються.
+  </p>
+  <DoorsFilter doors={loadDoors()} />
+</Base>

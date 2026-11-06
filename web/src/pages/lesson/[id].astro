@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import DoorsMap from '../../components/DoorsMap.astro';
+import DoorsFilter from '../../components/DoorsFilter.astro';
+import { loadDoors, loadLessons, type Lesson } from '../../lib/content';
+import { u } from '../../lib/url';
+
+export function getStaticPaths() {
+  return loadLessons().map((lesson) => ({ params: { id: String(lesson.id) }, props: { lesson } }));
+}
+const { lesson } = Astro.props as { lesson: Lesson };
+const nextId = lesson.id < 8 ? lesson.id + 1 : null;
+const promptId = `prompt-${lesson.id}`;
+const gif = lesson.demo.gif ? u(`media/${lesson.demo.gif}`) : null;
+---
+<Base title={`Місія ${lesson.id}. ${lesson.mission}`} description={lesson.tldr}>
+  <article class="lesson" id="lesson" data-lesson={lesson.id}>
+    <header class="lesson-head">
+      <p class="eyebrow">Місія {lesson.id} з 8 · ~{lesson.minutes} хв{lesson.audience && ` · ${lesson.audience}`}</p>
+      <h1>{lesson.title}</h1>
+      <ol class="dots" aria-hidden="true"></ol>
+      <p class="hint" id="step" aria-live="polite"></p>
+    </header>
+
+    <section class="card" data-kind="hook">
+      <h2 tabindex="-1">Місія «{lesson.mission}»</h2>
+      <p>{lesson.hook}</p>
+      <p class="tldr"><strong>Якщо прочитаєш одне речення:</strong> {lesson.tldr}</p>
+    </section>
+
+    {
+      lesson.cards.map((c) => (
+        <section class="card" data-kind="idea">
+          <h2 tabindex="-1">{c.title}</h2>
+          <Fragment set:html={c.html} />
+        </section>
+      ))
+    }
+
+    <section class="card" data-kind="demo">
+      <h2 tabindex="-1">Подивись</h2>
+      {lesson.demo.diagram === 'doors-map' && <DoorsMap />}
+      {lesson.demo.diagram === 'doors-filter' && <DoorsFilter doors={loadDoors()} id="lesson-doors" />}
+      {gif && <img src={gif} alt={lesson.demo.todo ?? 'Демонстрація'} width="640" height="400" loading="lazy" />}
+      {
+        !gif && lesson.demo.todo && (
+          <div class="placeholder">
+            <p><strong>Тут буде коротке відео (до 60 секунд, без звуку).</strong></p>
+            <p class="muted">Що на ньому: {lesson.demo.todo}</p>
+          </div>
+        )
+      }
+      {lesson.demo.caption && <p>{lesson.demo.caption}</p>}
+    </section>
+
+    {
+      lesson.quiz.map((q, qi) => (
+        <section class="card quiz" data-kind="quiz" data-q={qi}>
+          <h2 tabindex="-1">Питання {qi + 1} з 3</h2>
+          <p class="q">{q.q}</p>
+          <div class="options" role="group" aria-label="Варіанти відповіді">
+            {q.options.map((o, oi) => (
+              <button type="button" class="opt" data-i={oi} data-ok={oi === q.answer ? '1' : '0'}>
+                {o}
+              </button>
+            ))}
+          </div>
+          <div class="feedback" aria-live="polite" hidden>
+            <p class="verdict" />
+            <p class="why">{q.why}</p>
+          </div>
+          <details class="nojs">
+            <summary>Відповідь і пояснення</summary>
+            <p>Правильно: «{q.options[q.answer]}». {q.why}</p>
+          </details>
+        </section>
+      ))
+    }
+
+    <section class="card" data-kind="action">
+      <h2 tabindex="-1">Спробуй за 2 хвилини</h2>
+      <p>{lesson.action.text}</p>
+      <pre class="prompt" id={promptId}>{lesson.action.prompt}</pre>
+      <div class="row">
+        <button type="button" class="secondary" data-copy-target={promptId} data-label="Скопіювати промпт">Скопіювати промпт</button>
+        <a class="secondary btn" href="https://claude.ai/" target="_blank" rel="noopener">Відкрити Claude</a>
+      </div>
+      <button type="button" class="primary big" id="did-it" aria-pressed="false">Я зробив</button>
+      <p class="hint">Можна зробити пізніше — ця кнопка нікуди не дінеться.</p>
+    </section>
+
+    <section class="card reward" data-kind="reward">
+      <h2 tabindex="-1">Місію «{lesson.mission}» завершено</h2>
+      <p id="reward-xp">Ти дочитав місію до кінця — це вже результат.</p>
+      <p id="reward-chaos"></p>
+      <ul class="badges" id="reward-badges"></ul>
+      <div class="row">
+        <a class="primary btn" id="next-link" href={nextId ? u(`lesson/${nextId}/`) : u('progress/')}>
+          {nextId ? 'Наступна місія' : 'Мій прогрес'}
+        </a>
+        <a class="secondary btn" href={u('map/')}>До карти</a>
+      </div>
+      {lesson.id === 1 && <p><a href={u('start/')}>Обрати маршрут за роллю</a> — офіс, менеджер чи розробник.</p>}
+      <p class="hint">Хочеш нагадування раз на день? <a href={u('reminders/')}>Додай у календар</a>.</p>
+    </section>
+
+    <nav class="pager" aria-label="Картки уроку">
+      <button type="button" class="secondary" id="prev">Назад</button>
+      <button type="button" class="primary" id="next">Далі</button>
+    </nav>
+  </article>
+  <script>
+    import '../../scripts/lesson';
+  </script>
+</Base>

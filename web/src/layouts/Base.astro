@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { loadLessons } from '../lib/content';
+import { u } from '../lib/url';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = '8 місій по 5 хвилин: як працювати з Claude там, де вже лежать твої дані. Без реєстрації, без покарань за пропуск.' } = Astro.props;
+const lessons = loadLessons();
+const meta = {
+  lessons: Object.fromEntries(
+    lessons.map((l) => [l.id, { title: l.title, mission: l.mission, chaos: l.chaos, url: u(`lesson/${l.id}/`) }]),
+  ),
+  progressUrl: u('progress/'),
+};
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SRC || 'https://cloud.umami.is/script.js';
+const nav = [
+  ['map/', 'Карта місій'],
+  ['progress/', 'Прогрес'],
+  ['prompts/', 'Промпти'],
+  ['doors/', 'Які двері'],
+  ['challenge/', 'Челендж 7 днів'],
+  ['reminders/', 'Нагадування'],
+];
+---
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Claude без нудьги</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a6a6a" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a6a6a'/%3E%3Crect x='10' y='7' width='12' height='19' rx='2' fill='none' stroke='white' stroke-width='2.5'/%3E%3Ccircle cx='19' cy='17' r='1.6' fill='white'/%3E%3C/svg%3E" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        try {
+          var s = JSON.parse(localStorage.getItem('bez-nudhy:v1') || 'null');
+          if (s && s.focus === true) d.classList.add('focus');
+        } catch (e) {}
+      })();
+    </script>
+    {umamiId && <script is:inline defer src={umamiSrc} data-website-id={umamiId} data-do-not-track="true" />}
+  </head>
+  <body>
+    <a class="skip" href="#main">До змісту</a>
+    <header class="top">
+      <a class="brand" href={u('')}>Claude <span>без нудьги</span></a>
+      <a class="ghost btn" href={u('map/')}>Карта</a>
+      <button id="focus-toggle" class="ghost" type="button" aria-pressed="false">Фокус</button>
+      <div class="stats">
+        <a class="stat" id="stat-level" href={u('progress/')}>Рівень 1 · 0 XP</a>
+        <span class="stat" id="stat-chaos" title="Непрочитані листи в сюжеті курсу">Листів: 214</span>
+      </div>
+    </header>
+    <p id="storage-note" class="note" role="status" hidden>
+      Прогрес не збережеться на цьому пристрої (можливо, приватний режим). Курс працює, просто без пам'яті.
+    </p>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="foot">
+      <nav aria-label="Розділи курсу">
+        {nav.map(([href, label]) => <a href={u(href)}>{label}</a>)}
+      </nav>
+      <p>Неофіційний навчальний курс для команди. Факти про продукти Claude перевірено 6 листопада 2026.</p>
+    </footer>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script type="application/json" id="course-meta" set:html={JSON.stringify(meta)} />
+    <script>
+      import '../scripts/shell';
+    </script>
+  </body>
+</html>

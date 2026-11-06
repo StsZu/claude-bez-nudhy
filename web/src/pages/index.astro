@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+---
+<Base title="Почни за 30 секунд">
+  <section class="card hero">
+    <p class="eyebrow">Курс для команди · 8 місій по 5 хвилин</p>
+    <h1>Claude без нудьги</h1>
+    <p>
+      Понеділок. <strong>214 непрочитаних листів</strong>, таблиця з пекла й дедлайн у п'ятницю. Тебе щойно призначили
+      AI-провідником команди. У тебе 7 днів і Claude.
+    </p>
+    <a class="primary btn big" id="cta" href={u('lesson/1/')}>Почати за 30 секунд</a>
+    <p class="hint">Без реєстрації. Прогрес зберігається на цьому пристрої.</p>
+  </section>
+  <section class="card page-only">
+    <h2>Як це працює</h2>
+    <ul>
+      <li><strong>Одна місія — 5 хвилин:</strong> картка-ідея, коротке демо, 3 питання, одна дія.</li>
+      <li><strong>Порядок довільний.</strong> Стрибай до місії, яка цікава саме зараз.</li>
+      <li><strong>Пропустив день — прогрес на місці.</strong> Жодних штрафів, повернення нагороджується.</li>
+      <li><strong>Режим фокусу</strong> ховає все зайве — кнопка «Фокус» угорі.</li>
+    </ul>
+    <div class="row">
+      <a class="secondary btn" href={u('map/')}>Карта місій</a>
+      <a class="secondary btn" href={u('start/')}>Обрати маршрут за роллю</a>
+    </div>
+  </section>
+  <script>
+    import { nextLesson } from '../lib/game';
+    import { getState, meta } from '../scripts/store';
+    const s = getState();
+    const n = nextLesson(s);
+    const cta = document.getElementById('cta') as HTMLAnchorElement;
+    if (s.started.length && n) {
+      cta.href = meta.lessons[n].url;
+      cta.textContent = `Продовжити: місія «${meta.lessons[n].mission}»`;
+    } else if (s.started.length && !n) {
+      cta.href = meta.progressUrl;
+      cta.textContent = 'Усі місії пройдено — мій прогрес';
+    }
+  </script>
+</Base>

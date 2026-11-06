@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-06T13:54:29.924Z",
+  "formFactor": "mobile",
+  "target": {
+    "accessibility": 95,
+    "performance": 90
+  },
+  "results": [
+    {
+      "page": "/",
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "lcpMs": 601,
+      "cls": 0,
+      "a11yFails": []
+    },
+    {
+      "page": "/lesson/1/",
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "lcpMs": 1203,
+      "cls": 0.03118499281737531,
+      "a11yFails": []
+    },
+    {
+      "page": "/map/",
+      "performance": 98,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "lcpMs": 1052,
+      "cls": 0.08498132448777565,
+      "a11yFails": []
+    }
+  ]
+}
