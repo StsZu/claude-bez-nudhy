@@ -1,0 +1,34 @@
+# Прогін перевірок 2026-11-06 15:58:25
+## Vitest
+ Test Files  4 passed (4)
+      Tests  32 passed (32)
+## check:content
+01-odna-holova.md: 243 слів
+02-chat.md: 266 слів
+03-claude-code.md: 271 слів
+04-u-prohramakh.md: 311 слів
+05-konektory.md: 254 слів
+06-avtopilot.md: 243 слів
+07-modeli-i-taryfy.md: 232 слів
+08-yaki-dveri.md: 157 слів
+
+Контент OK: ≤ 450 слів на урок, 0 заборонених слів, факти аудиту виправлені.
+## Playwright (360 px, Chrome)
+  ✓   2 tests/e2e/map-and-pages.spec.ts:3:1 › карта: роль «Розробник» рекомендує 3 і 6, урок 6 відкривається напряму (350ms)
+  ✓   3 tests/e2e/map-and-pages.spec.ts:15:1 › вибір ролі на /start веде в першу місію маршруту (152ms)
+  ✓   4 tests/e2e/map-and-pages.spec.ts:21:1 › режим фокусу ховає шапку й пам'ятається (177ms)
+  ✓   5 tests/e2e/map-and-pages.spec.ts:33:1 › шпаргалка: фільтр «таблиц» лишає рядки про таблиці (119ms)
+  ✓   6 tests/e2e/map-and-pages.spec.ts:43:1 › челендж: день 5 без 1–4 дає +20 XP один раз (169ms)
+  ✓   7 tests/e2e/map-and-pages.spec.ts:53:1 › скидання прогресу вимагає підтвердження (277ms)
+  ✓   8 tests/e2e/map-and-pages.spec.ts:65:1 › пропуск 5 днів: XP на місці, «З поверненням», жодних слів про втрату (203ms)
+  ✓   9 tests/e2e/map-and-pages.spec.ts:81:1 › без JS усі картки уроку видно, пояснення в розгортках (119ms)
+  ✓   1 tests/e2e/lesson1.spec.ts:6:1 › урок 1: від лендінгу до нагороди ≤ 25 натискань, прогрес переживає перезавантаження (1.7s)
+  ✓  10 tests/e2e/map-and-pages.spec.ts:92:1 › сховище недоступне: курс працює й показує примітку (198ms)
+  ✓  12 tests/e2e/map-and-pages.spec.ts:106:1 › reduced motion: картка без анімації (128ms)
+  ✓  13 tests/e2e/map-and-pages.spec.ts:113:1 › без налаштування аналітики немає скрипта Umami (114ms)
+  ✓  14 tests/e2e/map-and-pages.spec.ts:118:1 › нагадування: завантажується .ics з 7 подіями (157ms)
+  ✓  11 tests/e2e/lesson1.spec.ts:54:1 › повторна відповідь не дає XP повторно (613ms)
+  ✓  15 tests/e2e/map-and-pages.spec.ts:133:1 › бібліотека промптів: 8 груп, фільтр за місією, копіювання (210ms)
+  15 passed (5.0s)
+## pytest (bot)
+44 passed in 0.93s

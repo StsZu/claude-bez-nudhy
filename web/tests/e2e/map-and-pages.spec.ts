@@ -129,3 +129,14 @@ test('нагадування: завантажується .ics з 7 подія�
   expect(ics).toMatch(/DTSTART:\d{8}T083000/);
   expect(ics).toContain('/lesson/2/');
 });
+
+test('бібліотека промптів: 8 груп, фільтр за місією, копіювання', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/prompts/');
+  await expect(page.locator('[data-group]')).toHaveCount(8);
+  await page.getByRole('button', { name: '4. Таблиця з пекла' }).click();
+  await expect(page.locator('[data-group]:visible')).toHaveCount(1);
+  await page.locator('[data-group="4"] button[data-copy-target]').first().click();
+  const clip = await page.evaluate(() => navigator.clipboard.readText());
+  expect(clip).toContain('Поясни цю таблицю');
+});

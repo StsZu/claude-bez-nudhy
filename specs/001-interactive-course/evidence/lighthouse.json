@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-06T13:54:29.924Z",
+  "date": "2026-11-06T13:56:20.510Z",
   "formFactor": "mobile",
   "target": {
     "accessibility": 95,
@@ -11,7 +11,7 @@
       "performance": 100,
       "accessibility": 100,
       "bestPractices": 100,
-      "lcpMs": 601,
+      "lcpMs": 602,
       "cls": 0,
       "a11yFails": []
     },
@@ -20,7 +20,7 @@
       "performance": 100,
       "accessibility": 100,
       "bestPractices": 100,
-      "lcpMs": 1203,
+      "lcpMs": 1204,
       "cls": 0.03118499281737531,
       "a11yFails": []
     },
@@ -29,7 +29,7 @@
       "performance": 98,
       "accessibility": 100,
       "bestPractices": 100,
-      "lcpMs": 1052,
+      "lcpMs": 1053,
       "cls": 0.08498132448777565,
       "a11yFails": []
     }
