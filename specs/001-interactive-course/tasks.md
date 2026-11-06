@@ -109,7 +109,8 @@
 - [ ] T024 Деплой прев'ю на GitHub Pages — `.github/workflows/pages.yml`
   - Рішення D1: GitHub Pages, власник 2026-11-06 «ok GitHub Pages»; акаунт `StsZu` (gh CLI)
   - Done / перевірка: відкривається `https://stszu.github.io/claude-bez-nudhy/`, урок 1 з карти, `course.json` з повними адресами
-  - Стан: workflow готовий (тести + check:content + збірка з `SITE_URL`/`BASE_PATH` з `configure-pages`); локальна збірка з `BASE_PATH=/claude-bez-nudhy/` — 17 сторінок, 25 кореневих посилань, усі з підшляхом; `course.json` site = `https://stszu.github.io`. Чекає: створення публічного репозиторію і push
+  - Стан: workflow готовий (тести + check:content + збірка з `SITE_URL`/`BASE_PATH` з `configure-pages`); локальна збірка з `BASE_PATH=/claude-bez-nudhy/` — 17 сторінок, 25 кореневих посилань, усі з підшляхом; `course.json` site = `https://stszu.github.io`. Push дозволено 2026-11-06 («ok push»): репозиторій https://github.com/StsZu/claude-bez-nudhy створено (публічний), Pages — `build_type: workflow`
+  - Спроби: 1) запуск 42250363283 — build успішний, deploy: 10 хв `updating_pages` → тайм-аут (перший деплой нового сайту); 2) повтор deploy того самого коміту → «Deployment cancelled» за 5 с (той самий `pages_build_version`, що й скасований); 3) новий коміт — цей
 
 ## W7 — Прогалини з узгодження (2026-11-06)
 
