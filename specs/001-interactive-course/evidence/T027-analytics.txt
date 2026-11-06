@@ -13,4 +13,5 @@ Workflow передає її в збірку; живий HTML містить:
 (це тестовий візит — 1 відвідувач у статистиці 2026-11-06)
 
 Lighthouse мобільний на живому сайті зі скриптом Umami: / Perf 100 A11y 100; /lesson/1/ Perf 100 A11y 100.
-Не перевірено: події в дашборді Umami (бачить лише власник); воронка lesson_start(1) → lesson_complete(8) — налаштувати в Umami (Funnels).
+2026-11-06 власник підтвердив: lesson_start і card_view тестового візиту видно в дашборді Umami.
+Не зроблено: воронка lesson_start(1) → lesson_complete(8) — налаштувати в Umami (Funnels).
