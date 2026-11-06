@@ -1,0 +1,19 @@
+T028 — редизайн за шаблоном «Лабораторія місій», 2026-11-06
+
+npm test: 32/32 Vitest
+npm run check:content: OK
+npm run e2e: 15/15 (Chrome, 360 px)
+
+Lighthouse (локальна збірка dist, мобільний і десктоп-профіль):
+mobile   /            perf 100 a11y 100 bp 100 
+mobile   /lesson/1/   perf 100 a11y 100 bp 100 
+mobile   /map/        perf 98 a11y 100 bp 100 
+mobile   /progress/   perf 100 a11y 100 bp 100 
+desktop  /            perf 100 a11y 100 bp 100 
+desktop  /lesson/1/   perf 100 a11y 100 bp 100 
+desktop  /map/        perf 100 a11y 100 bp 100 
+desktop  /progress/   perf 100 a11y 100 bp 100 
+
+Контраст палітри (WCAG): світла — текст 12.2, muted 5.3–5.7, акцент 8.1, теракотовий #a94d31 5.2; темна — усі пари ≥ 6.4.
+Огляд скриншотів: /, /map/, /lesson/1/, /progress/ — 360 і 1440 px; світла й темна тема; режим фокусу на десктопі ховає бічне меню.
+Під час перевірки виправлено: контраст ядра схеми (4.19 → --warn) і заблокованих бейджів (opacity 0.75 → без прозорості).

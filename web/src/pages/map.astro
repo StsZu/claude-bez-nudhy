@@ -4,23 +4,26 @@ import { loadLessons } from '../lib/content';
 import { u } from '../lib/url';
 import { ROLES } from '../lib/game';
 const lessons = loadLessons();
+const icons = ['⌘', '☰', '›_', '▦', '⚿', '↻', '◈', '↗'];
 ---
-<Base title="Карта місій">
-  <h1>Карта місій</h1>
+<Base title="Карта місій" wide>
+  <p class="eyebrow">8 місій · будь-який порядок</p>
+  <h1>Карта <em>місій</em></h1>
   <p id="map-next" class="tldr" hidden></p>
   <p class="muted">Відкривай будь-яку місію в будь-якому порядку.</p>
   <div class="chips" role="group" aria-label="Маршрут за роллю">
     {Object.entries(ROLES).map(([k, r]) => <button type="button" class="ghost" data-role={k} aria-pressed="false">{r.name}</button>)}
     <button type="button" class="ghost" data-role="" aria-pressed="false">Без ролі</button>
   </div>
-  <ol class="missions" id="missions">
+  <ol class="missions mission-grid" id="missions">
     {
       lessons.map((l) => (
         <li data-lesson={l.id}>
           <a class="mission" href={u(`lesson/${l.id}/`)}>
-            <span class="muted">Місія {l.id} · ~{l.minutes} хв</span>
+            <span class="m-top"><span>Місія {String(l.id).padStart(2, '0')}</span><span>~{l.minutes} хв</span></span>
+            <span class="m-icon" aria-hidden="true">{icons[l.id - 1]}</span>
             <span class="title">{l.mission}</span>
-            <span>{l.title}</span>
+            <span class="sub">{l.title}</span>
             <span class="tags">
               <span class="tag" data-status>Нова</span>
               <span class="tag rec" data-rec hidden>Рекомендовано</span>
@@ -51,6 +54,7 @@ const lessons = loadLessons();
         b.setAttribute('aria-pressed', String((b.dataset.role || null) === s.role)),
       );
       const n = nextLesson(s);
+      items.forEach((li, id) => li.classList.toggle('next', id === n));
       nextP.hidden = false;
       nextP.innerHTML = '';
       if (n) {
