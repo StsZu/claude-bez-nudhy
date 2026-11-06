@@ -63,7 +63,7 @@ Playwright використовує встановлений Google Chrome (`cha
 
 Сайт — звичайні статичні файли з `web/dist/`. Підходить будь-який статичний хостинг за $0.
 
-- **GitHub Pages:** `SITE_URL=https://<user>.github.io BASE_PATH=/<repo>/ npm run build`, вміст `web/dist/` — у гілку `gh-pages` або через GitHub Actions.
+- **GitHub Pages (обрано):** готовий workflow `.github/workflows/pages.yml`. Один раз: у репозиторії Settings → Pages → Source: **GitHub Actions**. Далі кожен push у `main` проганяє тести, перевірку контенту й публікує сайт; адресу й підшлях workflow бере сам. Ручна збірка: `SITE_URL=https://<user>.github.io BASE_PATH=/<repo>/ npm run build`.
 - **Netlify / Vercel:** тека збірки `web`, команда `npm run build`, тека публікації `dist`; задати `SITE_URL`.
 
 Змінні середовища (файл `web/.env`, не в git):
