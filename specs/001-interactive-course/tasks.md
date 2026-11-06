@@ -7,8 +7,8 @@
 ## Стан продовження
 
 - Оновлено: 2026-11-06
-- Поточна хвиля: W6 завершено, крім T024
-- Наступний крок: T024 — створити публічний репозиторій `StsZu/claude-bez-nudhy`, push `main`, увімкнути Pages (Actions) — чекає дозволу на push
+- Поточна хвиля: W6 завершено; W7 — T025–T027
+- Наступний крок: T025 (людина редагує урок за README) — локально; T026/T027 — після D2/D3
 - Blockers / відкриті рішення: D1 вирішено 2026-11-06 — GitHub Pages («ok GitHub Pages»); push і створення репозиторію — окремий дозвіл; D2 (токен і хостинг бота) → T026; D3 (Umami) → T027
 - Погоджений обсяг: `plan.md` → «Погоджений обсяг і зміни»
 
@@ -106,11 +106,12 @@
   - Доказ і стан: `evidence/T022-readme-check.txt` — зміна в уроці 2 з'явилась у `dist`, 0 змін у `web/src`; `.env` підхоплюється (виправлено: конфіг не читав `.env`); підшлях `BASE_PATH` перевірено. Перевірка на людині ≤ 10 хв — після MVP
 - [x] T023 Узгодження — `alignment.md`
   - Доказ і стан: 2026-11-06
-- [ ] T024 Деплой прев'ю на GitHub Pages — `.github/workflows/pages.yml`
+- [x] T024 Деплой прев'ю на GitHub Pages — `.github/workflows/pages.yml`
   - Рішення D1: GitHub Pages, власник 2026-11-06 «ok GitHub Pages»; акаунт `StsZu` (gh CLI)
   - Done / перевірка: відкривається `https://stszu.github.io/claude-bez-nudhy/`, урок 1 з карти, `course.json` з повними адресами
   - Стан: workflow готовий (тести + check:content + збірка з `SITE_URL`/`BASE_PATH` з `configure-pages`); локальна збірка з `BASE_PATH=/claude-bez-nudhy/` — 17 сторінок, 25 кореневих посилань, усі з підшляхом; `course.json` site = `https://stszu.github.io`. Push дозволено 2026-11-06 («ok push»): репозиторій https://github.com/StsZu/claude-bez-nudhy створено (публічний), Pages — `build_type: workflow`
-  - Спроби: 1) запуск 42250363283 — build успішний, deploy: 10 хв `updating_pages` → тайм-аут (перший деплой нового сайту); 2) повтор deploy того самого коміту → «Deployment cancelled» за 5 с (той самий `pages_build_version`, що й скасований); 3) новий коміт — цей
+  - Спроби: 1) запуск 42250363283 — build успішний, deploy: 10 хв `updating_pages` → тайм-аут (перший деплой нового сайту); 2) повтор deploy того самого коміту → «Deployment cancelled» за 5 с (той самий `pages_build_version`, що й скасований); 3) новий коміт — 400 «in progress deployment», стару публікацію скасовано через API; 4) повтор → success
+  - Доказ: `evidence/T024-deploy.txt` — https://stszu.github.io/claude-bez-nudhy/: `/`, `/lesson/1/`, `/map/`, `/course.json` → 200; усі ресурси уроку 1 → 200
 
 ## W7 — Прогалини з узгодження (2026-11-06)
 

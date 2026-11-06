@@ -1,0 +1,17 @@
+T024 Деплой прев'ю на GitHub Pages — 2026-11-06
+Репозиторій: https://github.com/StsZu/claude-bez-nudhy (публічний), Pages build_type: workflow
+Сайт: https://stszu.github.io/claude-bez-nudhy/
+
+Спроби:
+1) run 42250363283 (коміт 3124784): build ok; deploy — 10 хв "updating_pages" → тайм-аут, деплой скасовано
+2) повтор deploy того ж коміту → "Deployment cancelled" за 5 с
+3) run 42252265205 (коміт 7bfd8ac): 400 "in progress deployment. Please cancel 3124784… first"
+   → GET pages/deployments/3124784… = deployment_cancelled; POST …/cancel = ok
+4) повтор deploy run 42252265205 → success
+
+Перевірка живого сайту (curl):
+/ 200 · /lesson/1/ 200 · /map/ 200 · /course.json 200 · /nope → сторінка 404 курсу
+course.json: site=https://stszu.github.io, lessons[0].url=/claude-bez-nudhy/lesson/1/, 8 уроків, 7 днів челенджу
+/map/: 8 посилань на уроки з підшляхом
+/lesson/1/: 11 внутрішніх посилань і ресурсів — усі 200
+Не перевірено на живому сайті: Lighthouse, e2e (перевірено локально — evidence/lighthouse.json, test-run.txt)
