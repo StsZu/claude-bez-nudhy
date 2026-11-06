@@ -14,4 +14,4 @@ Workflow передає її в збірку; живий HTML містить:
 
 Lighthouse мобільний на живому сайті зі скриптом Umami: / Perf 100 A11y 100; /lesson/1/ Perf 100 A11y 100.
 2026-11-06 власник підтвердив: lesson_start і card_view тестового візиту видно в дашборді Umami.
-Не зроблено: воронка lesson_start(1) → lesson_complete(8) — налаштувати в Umami (Funnels).
+2026-11-06 власник створив воронку «Урок 1 → урок 8»: кроки Viewed page від /claude-bez-nudhy/lesson/1/ до /claude-bez-nudhy/lesson/8/, вікно 20160 хв (14 днів).
