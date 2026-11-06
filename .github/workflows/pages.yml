@@ -36,6 +36,7 @@ jobs:
         env:
           SITE_URL: ${{ steps.pages.outputs.origin }}
           BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+          PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
       - uses: actions/upload-pages-artifact@v4
         with:
           path: web/dist

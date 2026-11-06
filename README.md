@@ -66,6 +66,8 @@ Playwright використовує встановлений Google Chrome (`cha
 - **GitHub Pages (обрано):** готовий workflow `.github/workflows/pages.yml`. Один раз: у репозиторії Settings → Pages → Source: **GitHub Actions**. Далі кожен push у `main` проганяє тести, перевірку контенту й публікує сайт; адресу й підшлях workflow бере сам. Ручна збірка: `SITE_URL=https://<user>.github.io BASE_PATH=/<repo>/ npm run build`.
 - **Netlify / Vercel:** тека збірки `web`, команда `npm run build`, тека публікації `dist`; задати `SITE_URL`.
 
+На GitHub `PUBLIC_UMAMI_WEBSITE_ID` задано як змінну репозиторію (Settings → Secrets and variables → Actions → Variables); workflow передає її в збірку. Це не секрет — ID видно в коді сторінки.
+
 Змінні середовища (файл `web/.env`, не в git):
 
 | Змінна | Навіщо |
