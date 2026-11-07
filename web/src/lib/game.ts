@@ -31,7 +31,7 @@ export const LEVELS = [
   { level: 3, name: 'Ключник', min: 250 },
   { level: 4, name: 'Диспетчер дверей', min: 450 },
   { level: 5, name: 'Майстер автопілота', min: 700 },
-  { level: 6, name: 'AI-провідник команди', min: 900 },
+  { level: 6, name: 'ШІ-провідник команди', min: 900 },
 ] as const;
 
 export const BADGES: Record<string, { name: string; hint: string }> = {
@@ -43,7 +43,7 @@ export const BADGES: Record<string, { name: string; hint: string }> = {
   comeback: { name: 'З поверненням', hint: 'Повернись після паузи — пауза це нормально' },
   'challenge-7': { name: 'Тиждень практики', hint: 'Відміть усі 7 днів челенджу в будь-якому порядку' },
   'route-done': { name: 'Свій маршрут', hint: 'Заверши всі рекомендовані місії своєї ролі' },
-  guide: { name: 'AI-провідник', hint: 'Заверши всі 8 місій' },
+  guide: { name: 'ШІ-провідник', hint: 'Заверши всі 8 місій' },
 };
 
 export const ROLES: Record<Role, { name: string; order: number[]; recommended: number[] }> = {

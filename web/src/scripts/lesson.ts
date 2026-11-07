@@ -93,7 +93,7 @@ function complete(): void {
     (lv.next ? `, до наступного ${lv.toNext} XP.` : '.');
   const left = chaosLeft(s, chaosByLesson);
   document.getElementById('reward-chaos')!.textContent =
-    left === 0 ? 'Скринька порожня: 214 листів розібрано. Ти — AI-провідник команди.' : `У скриньці лишилось ${left} листів із 214.`;
+    left === 0 ? 'Скринька порожня: 214 листів розібрано. Ти — ШІ-провідник команди.' : `У скриньці лишилось ${left} листів із 214.`;
   const list = document.getElementById('reward-badges')!;
   list.replaceChildren(
     ...(r?.newBadges ?? []).map((b) => {

@@ -113,7 +113,7 @@ describe('XP, бейджі, хаос', () => {
     }
     for (let c = 1; c <= 7; c++) st = apply(st, { type: 'challenge', day: c }, d()).state;
     expect(st.xp).toBe(1020);
-    expect(levelFor(st.xp).name).toBe('AI-провідник команди');
+    expect(levelFor(st.xp).name).toBe('ШІ-провідник команди');
     expect(st.badges.sort()).toEqual(
       ['challenge-7', 'doer', 'first-door', 'guide', 'practitioner', 'route-done', 'sniper', 'streak-3'].sort(),
     );

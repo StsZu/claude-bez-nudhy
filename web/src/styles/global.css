@@ -168,6 +168,7 @@ button[aria-pressed='true'].ghost { background: var(--accent-soft); border-color
   font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;
 }
 .eyebrow::before { content: ''; flex: none; width: 1.5rem; height: 1px; background: currentColor; }
+.lesson-head .eyebrow { text-transform: none; letter-spacing: 0.02em; font-size: 0.9375rem; font-weight: 600; }
 .tldr { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 4px 8px 8px 4px; padding: 0.9rem 1.1rem; }
 .muted { color: var(--muted); }
 .hint { color: var(--muted); font-size: 0.9375rem; }
