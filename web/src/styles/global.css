@@ -71,7 +71,7 @@ li + li { margin-top: 0.35em; }
 strong { font-weight: 650; }
 a { color: var(--accent); text-underline-offset: 3px; }
 code, pre { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.9em; }
-pre { background: var(--surface-2); padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.65; }
+pre { background: var(--surface-2); padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; line-height: 1.65; hyphens: manual; }
 details { margin: 0.6em 0; }
 summary { cursor: pointer; color: var(--accent); font-weight: 600; padding: 0.4em 0; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
@@ -267,6 +267,11 @@ button[aria-pressed='true'].ghost { background: var(--accent-soft); border-color
 .options { display: none; }
 
 .prompt { border: 1px dashed var(--line); }
+.steps { padding-left: 1.4em; }
+.steps li::marker { font-weight: 700; color: var(--accent); }
+.example { border-left: 3px solid var(--terra); background: var(--terra-soft); border-radius: 4px 8px 8px 4px; padding: 0.8rem 1rem; margin: 0.5rem 0 1rem; }
+.example p { margin: 0 0 0.4rem; }
+.example p:last-child { margin: 0; font-style: italic; }
 .placeholder {
   border: 2px dashed var(--line); border-radius: 10px; padding: 1rem; background: var(--surface-2);
 }

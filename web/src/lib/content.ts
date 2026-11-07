@@ -35,7 +35,7 @@ const LessonMeta = z.object({
     todo: z.string().optional(),
   }),
   quiz: z.array(QuizItem).length(3, 'у квізі має бути рівно 3 питання'),
-  action: z.object({ text: text('текст дії'), prompt: text('промпт') }),
+  action: z.object({ text: text('текст дії'), prompt: text('промпт'), example: z.string().min(1).optional() }),
   examples: z.array(z.string().min(1)).optional(),
 });
 

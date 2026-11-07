@@ -11,6 +11,7 @@ export function getStaticPaths() {
 const { lesson } = Astro.props as { lesson: Lesson };
 const nextId = lesson.id < 8 ? lesson.id + 1 : null;
 const promptId = `prompt-${lesson.id}`;
+const hasBlanks = lesson.action.prompt.includes('[');
 const gif = lesson.demo.gif ? u(`media/${lesson.demo.gif}`) : null;
 ---
 <Base title={`Місія ${lesson.id}. ${lesson.mission}`} description={lesson.tldr}>
@@ -80,11 +81,25 @@ const gif = lesson.demo.gif ? u(`media/${lesson.demo.gif}`) : null;
     <section class="card" data-kind="action">
       <h2 tabindex="-1">Спробуй за 2 хвилини</h2>
       <p>{lesson.action.text}</p>
+      <ol class="steps">
+        <li>Скопіюй промпт нижче.</li>
+        <li>Відкрий Claude і встав промпт.</li>
+        {hasBlanks && <li>Заміни текст у [квадратних дужках] на свій.</li>}
+        <li>Надішли й прочитай відповідь.</li>
+      </ol>
       <pre class="prompt" id={promptId}>{lesson.action.prompt}</pre>
       <div class="row">
         <button type="button" class="secondary" data-copy-target={promptId} data-label="Скопіювати промпт">Скопіювати промпт</button>
         <a class="secondary btn" href="https://claude.ai/" target="_blank" rel="noopener">Відкрити Claude</a>
       </div>
+      {
+        lesson.action.example && (
+          <div class="example">
+            <p><strong>Приклад заповненого промпту:</strong></p>
+            <p>{lesson.action.example}</p>
+          </div>
+        )
+      }
       <button type="button" class="primary big" id="did-it" aria-pressed="false">Я зробив</button>
       <p class="hint">Можна зробити пізніше — ця кнопка нікуди не дінеться.</p>
     </section>
