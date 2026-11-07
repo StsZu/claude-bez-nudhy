@@ -98,7 +98,7 @@ def test_after_all_lessons_challenge_then_done(course):
         asyncio.run(send_daily(bot, app, user, datetime(2026, 11, d, 9, 0, tzinfo=KYIV)))
     assert "практика 1 з 7" in bot.sent[0][1]
     assert "практика 7 з 7" in bot.sent[6][1]
-    assert bot.sent[7][1].startswith("Ти пройшов усі 8 місій")
+    assert bot.sent[7][1].startswith("Усі 8 місій і 7 днів практики пройдено")
     assert app.db.get(1).enabled is False
 
 

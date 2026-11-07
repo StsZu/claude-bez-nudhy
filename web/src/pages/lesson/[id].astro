@@ -100,13 +100,13 @@ const gif = lesson.demo.gif ? u(`media/${lesson.demo.gif}`) : null;
           </div>
         )
       }
-      <button type="button" class="primary big" id="did-it" aria-pressed="false">Я зробив</button>
+      <button type="button" class="secondary big" id="did-it" aria-pressed="false">Готово, зроблено</button>
       <p class="hint">Можна зробити пізніше — ця кнопка нікуди не дінеться.</p>
     </section>
 
     <section class="card reward" data-kind="reward">
       <h2 tabindex="-1">Місію «{lesson.mission}» завершено</h2>
-      <p id="reward-xp">Ти дочитав місію до кінця — це вже результат.</p>
+      <p id="reward-xp">Місію пройдено до кінця — це вже результат.</p>
       <p id="reward-chaos"></p>
       <ul class="badges" id="reward-badges"></ul>
       <div class="row">

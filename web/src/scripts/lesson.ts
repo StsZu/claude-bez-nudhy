@@ -59,7 +59,7 @@ const didIt = document.getElementById('did-it') as HTMLButtonElement;
 function renderDidIt(): void {
   const done = getState().actions.includes(lessonId);
   didIt.setAttribute('aria-pressed', String(done));
-  didIt.textContent = done ? 'Зроблено — дякую!' : 'Я зробив';
+  didIt.textContent = done ? 'Зроблено — дякую!' : 'Готово, зроблено';
 }
 didIt.addEventListener('click', () => {
   if (!getState().actions.includes(lessonId)) {

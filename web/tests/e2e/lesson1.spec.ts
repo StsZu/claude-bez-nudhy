@@ -28,7 +28,7 @@ test('урок 1: від лендінгу до нагороди ≤ 25 нати�
     const action = page.locator('section.card.current[data-kind="action"]');
     if (await action.count()) {
       await click(action.getByRole('button', { name: 'Скопіювати промпт' }));
-      await click(page.getByRole('button', { name: 'Я зробив' }));
+      await click(page.getByRole('button', { name: 'Готово, зроблено' }));
       await expect(page.getByRole('button', { name: 'Зроблено — дякую!' })).toBeVisible();
     }
     if (await page.locator('section.card.current[data-kind="reward"]').count()) break;

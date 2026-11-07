@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-06T13:56:20.510Z",
+  "date": "2026-11-07T02:51:25.938Z",
   "formFactor": "mobile",
   "target": {
     "accessibility": 95,
@@ -11,7 +11,7 @@
       "performance": 100,
       "accessibility": 100,
       "bestPractices": 100,
-      "lcpMs": 602,
+      "lcpMs": 628,
       "cls": 0,
       "a11yFails": []
     },
@@ -21,7 +21,7 @@
       "accessibility": 100,
       "bestPractices": 100,
       "lcpMs": 1204,
-      "cls": 0.03118499281737531,
+      "cls": 0.04787555235343532,
       "a11yFails": []
     },
     {
@@ -29,8 +29,8 @@
       "performance": 98,
       "accessibility": 100,
       "bestPractices": 100,
-      "lcpMs": 1053,
-      "cls": 0.08498132448777565,
+      "lcpMs": 602,
+      "cls": 0.08509474091708913,
       "a11yFails": []
     }
   ]

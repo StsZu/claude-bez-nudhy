@@ -37,7 +37,7 @@ export function today(): string {
 export function dispatch(ev: GameEvent): ApplyResult {
   const r = apply(state, ev, today());
   commit(r.state);
-  if (r.comeback) toast("З поверненням! Продовжуємо з того місця, де ти зупинився.");
+  if (r.comeback) toast("З поверненням! Продовжуємо з того самого місця.");
   if (r.frozeDays > 0) toast('Заморозка зберегла твою серію днів.');
   if (r.gained > 0) toast(`+${r.gained} XP`);
   r.newBadges.forEach((b) => toast(`Новий бейдж: «${BADGES[b].name}»`));

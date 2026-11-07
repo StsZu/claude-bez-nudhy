@@ -9,7 +9,7 @@ subscribe((s) => {
   const lv = levelFor(s.xp);
   if (level) level.textContent = `Рівень ${lv.level} · ${s.xp} XP`;
   const left = chaosLeft(s, chaosByLesson);
-  if (chaos) chaos.textContent = left === 0 ? 'Листів: 0 — перемога' : `Листів: ${left}`;
+  if (chaos) chaos.textContent = left === 0 ? 'Непрочитаних листів: 0 — перемога' : `Непрочитаних листів: ${left}`;
   focusBtn?.setAttribute('aria-pressed', String(s.focus));
   if (focusBtn) focusBtn.textContent = s.focus ? 'Вийти з фокусу' : 'Фокус';
   document.documentElement.classList.toggle('focus', s.focus);

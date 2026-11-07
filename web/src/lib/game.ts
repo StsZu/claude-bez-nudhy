@@ -37,7 +37,7 @@ export const LEVELS = [
 export const BADGES: Record<string, { name: string; hint: string }> = {
   'first-door': { name: 'Перші двері', hint: 'Заверши будь-яку місію' },
   sniper: { name: 'Влучний', hint: 'Усі 3 питання однієї місії — з першої спроби' },
-  doer: { name: 'Діяч', hint: 'Натисни «Я зробив» у будь-якій дії на 2 хв' },
+  doer: { name: 'Діяч', hint: 'Натисни «Готово, зроблено» в будь-якій дії на 2 хв' },
   practitioner: { name: 'Практик', hint: 'Виконай 5 дій на 2 хв' },
   'streak-3': { name: 'Три дні поспіль', hint: 'Будь активним 3 дні поспіль' },
   comeback: { name: 'З поверненням', hint: 'Повернись після паузи — пауза це нормально' },
